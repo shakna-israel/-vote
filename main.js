@@ -231,9 +231,11 @@ function create_new_post(datauri, score) {
 	} else {
 		// Punish reposting...
 		score = ~~(score / 3);
-		if(score < 1) {
-			score = 1;
-		}
+	}
+
+	// Minimum score...
+	if(score < 1) {
+		score = 1;
 	}
 
 	// TODO: Comments...
