@@ -158,9 +158,14 @@ function get_bot_votes(botname) {
 	// Count votes across posts...
 	var score = 0;
 	for(var i = 0; i < posts.length; i++) {
-		// Allow for non-user posts...
 		if(posts[i].poster == botname) {
+			// Get the bot's post score
 			score += posts[i].score;
+		} else {
+			// Commenting increases the bot score
+			if(posts[i].commenters.indexOf(botname) >= 0) {
+				score += 1;
+			}
 		}
 	}
 
@@ -313,6 +318,9 @@ function create_new_post(datauri, score) {
 		commenters.push(iname);
 		comments.push(comment_bases[i].replace("<NAME>", iname));
 	}
+
+	// Update score
+	score = score + comments.length;
 
 	// Get the post time
 	var now = new Date();
