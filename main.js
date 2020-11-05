@@ -406,7 +406,8 @@ function trigger_follower_post() {
 		create_bot_post(name);
 	}
 
-	setTimeout(trigger_follower_post, (Math.random() * 3000) + 32000);
+	var min5 = 5 * 60 * 1000;
+	setTimeout(trigger_follower_post, (Math.random() * min5) + min5);
 }
 
 function update_timeline() {
