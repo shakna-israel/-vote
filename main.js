@@ -238,7 +238,7 @@ function create_new_post(datauri, score) {
 		score = 1;
 	}
 
-	// TODO: Comments...
+	// Comments...
 	var comments = [];
 	var commenters = [];
 
@@ -312,7 +312,7 @@ function create_new_post(datauri, score) {
 	var voteblock = document.getElementById('voteblock');
 	voteblock.textContent = get_votes();
 
-	// TODO: Check to see if we should add a follower...
+	// Check to see if we should add a follower...
 	if(score > 10) {
 		var val = name_generator();
 		var attempt = 0;
@@ -332,6 +332,81 @@ function create_new_post(datauri, score) {
 		// TODO: Check when setting if we've exceeded quota...
 		localStorage.setItem('followers', JSON.stringify(followers));
 	}
+}
+
+function create_bot_post(name) {
+	var posts = localStorage.getItem('posts');
+	if(!!posts) {
+		try {
+			posts = JSON.parse(posts);
+		} catch(e) {
+			posts = [];
+		}
+	} else {
+		posts = [];
+	}
+
+	var imgs = localStorage.getItem('imgs');
+	if(!!imgs) {
+		try {
+			imgs = JSON.parse(imgs);
+		} catch(e) {
+			imgs = [];
+		}
+	} else {
+		imgs = [];
+	}
+
+	// Choose random image from index
+	var idx = Math.floor(Math.random() * imgs.length);
+
+	var score = 1;
+	for(var i = 0; i < posts.length; i++) {
+		if(posts[i].img == idx) {
+			score = ~~(posts[i].score / 2);
+			break;
+		}
+	}
+
+	// Get the post time
+	var now = new Date();
+
+	// TODO: Comments on bot posts...
+	var comments = [];
+
+	posts.push({"img": idx,
+		"score": score,
+		"comments": comments,
+		"poster": name,
+		"published": now,
+		"commenters": []});
+
+	// TODO: Check when setting if we've exceeded quota...
+
+	localStorage.setItem('posts', JSON.stringify(posts));
+
+	// Trigger regenerating timeline
+	update_timeline();
+}
+
+function trigger_follower_post() {
+	var followers = localStorage.getItem('followers');
+	if(!!followers) {
+		try {
+			followers = JSON.parse(followers);
+		} catch(e) {
+			followers = [];
+		}
+	} else {
+		followers = [];
+	}
+
+	if(followers.length > 0) {
+		var name = followers[Math.floor(Math.random() * followers.length)];
+		create_bot_post(name);
+	}
+
+	setTimeout(trigger_follower_post, (Math.random() * 3000) + 32000);
 }
 
 function update_timeline() {
@@ -574,7 +649,8 @@ function app_load() {
 
 	create_ui();
 
-	// TODO: Add random trigger event to post from follower...
+	// Add random trigger event to post from follower...
+	trigger_follower_post();
 }
 
 window.addEventListener('load', app_load);
