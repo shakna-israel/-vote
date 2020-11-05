@@ -401,8 +401,8 @@ function create_bot_post(name) {
 		"comments": comments,
 		"poster": name,
 		"published": now,
-		"commenters": []},
-		"filter": filters[Math.floor(Math.random() * filters.length)]);
+		"commenters": [],
+		"filter": filters[Math.floor(Math.random() * filters.length)]});
 
 	// TODO: Check when setting if we've exceeded quota...
 
