@@ -455,6 +455,9 @@ function update_timeline() {
 			attribution.textContent = localStorage.getItem('username') ?? 'user001';
 		} else {
 			attribution.textContent = posts[i].poster;
+
+			// TODO: Add random CSS filter to bot images...
+			image_field.style = "filter: grayscale(75%);";
 		}
 		child_el.appendChild(attribution);
 
