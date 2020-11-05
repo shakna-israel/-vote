@@ -1,0 +1,62 @@
+body {
+	background-color: black;
+}
+
+.loading_intro {
+	text-align: center;
+}
+
+.ui_bar {
+	display: block;
+	margin: 0 auto;
+	border-radius: 0.2em;
+	width: 75%;
+	position: sticky;
+	background-color: #bebee8;
+	top: 0;
+}
+
+.ui_bar * {
+	display: inline;
+}
+
+.ui_title {
+	cursor: pointer;
+}
+
+#voteblock, #userblock {
+	float: right;
+}
+
+.ui_post {
+	display: block;
+	margin: 0 auto;
+	margin-top: 1em;
+	text-align: center;
+	background-color: #8ca9c8;
+	width: 70%;
+	padding-top: 0.1em;
+	padding-bottom: 0.3em;
+	border-radius: 0.4em;
+}
+
+.votes::before {
+	content: "+";
+	color: red;
+}
+
+.post_card {
+	text-align: center;
+	list-style: none;
+	background-color: white;
+	color: black;
+	width: 50%;
+	margin: 1em auto;
+	border-radius: 0.5em;
+}
+
+.post_card * {
+	width: 75%;
+	border-radius: 1em;
+	margin: 1em auto;
+}
