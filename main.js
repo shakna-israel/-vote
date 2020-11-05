@@ -504,7 +504,7 @@ function update_timeline() {
 		} else {
 			var attribution_text = "<USER> (<SCORE>)"
 				.replace("<USER>", posts[i].poster)
-				.replace("<SCORE>", get_bot_votes());
+				.replace("<SCORE>", get_bot_votes(posts[i].poster));
 			attribution.textContent = attribution_text;
 
 			// Add random CSS filter to bot images...
