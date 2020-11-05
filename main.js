@@ -298,7 +298,8 @@ function create_new_post(datauri, score) {
 		"comments": comments,
 		"poster": "user",
 		"published": now,
-		"commenters": commenters});
+		"commenters": commenters,
+		"filter": ""});
 
 	// TODO: Check when setting if we've exceeded quota...
 
@@ -374,12 +375,34 @@ function create_bot_post(name) {
 	// TODO: Comments on bot posts...
 	var comments = [];
 
+	var filters = [
+			"filter: grayscale(75%);",
+			"filter: grayscale(85%);",
+			"filter: grayscale(95%);",
+			"filter: brightness(75%);",
+			"filter: brightness(85%);",
+			"filter: brightness(95%);",
+			"filter: contrast(75%);",
+			"filter: contrast(85%);",
+			"filter: contrast(95%);",
+			"filter: hue-rotate(360);",
+			"filter: hue-rotate(400);",
+			"filter: hue-rotate(600);",
+			"filter: saturate(75%);",
+			"filter: saturate(85%);",
+			"filter: saturate(95%);",
+			"filter: sepia(75%);",
+			"filter: sepia(85%);",
+			"filter: sepia(95%);"
+		];
+
 	posts.push({"img": idx,
 		"score": score,
 		"comments": comments,
 		"poster": name,
 		"published": now,
-		"commenters": []});
+		"commenters": []},
+		"filter": filters[Math.floor(Math.random() * filters.length)]);
 
 	// TODO: Check when setting if we've exceeded quota...
 
@@ -457,29 +480,8 @@ function update_timeline() {
 		} else {
 			attribution.textContent = posts[i].poster;
 
-			var filters = [
-				"filter: grayscale(75%);",
-				"filter: grayscale(85%);",
-				"filter: grayscale(95%);",
-				"filter: brightness(75%);",
-				"filter: brightness(85%);",
-				"filter: brightness(95%);",
-				"filter: contrast(75%);",
-				"filter: contrast(85%);",
-				"filter: contrast(95%);",
-				"filter: hue-rotate(360);",
-				"filter: hue-rotate(400);",
-				"filter: hue-rotate(600);",
-				"filter: saturate(75%);",
-				"filter: saturate(85%);",
-				"filter: saturate(95%);",
-				"filter: sepia(75%);",
-				"filter: sepia(85%);",
-				"filter: sepia(95%);"
-			];
-
 			// Add random CSS filter to bot images...
-			image_field.style = filters[Math.floor(Math.random() * filters.length)];
+			image_field.style = posts[i].filter;
 		}
 		child_el.appendChild(attribution);
 
