@@ -143,6 +143,30 @@ function check_history() {
 	localStorage.setItem('username', username);
 }
 
+function get_bot_votes(botname) {
+	var posts = localStorage.getItem('posts');
+	if(!!posts) {
+		try {
+			posts = JSON.parse(posts);
+		} catch(e) {
+			posts = [];
+		}
+	} else {
+		posts = [];
+	}
+
+	// Count votes across posts...
+	var score = 0;
+	for(var i = 0; i < posts.length; i++) {
+		// Allow for non-user posts...
+		if(posts[i].poster == botname) {
+			score += posts[i].score;
+		}
+	}
+
+	return ~~(score / posts.length)
+}
+
 function get_votes() {
 	var posts = localStorage.getItem('posts');
 	if(!!posts) {
@@ -478,7 +502,10 @@ function update_timeline() {
 		if(posts[i].poster == 'user') {
 			attribution.textContent = localStorage.getItem('username') ?? 'user001';
 		} else {
-			attribution.textContent = posts[i].poster;
+			var attribution_text = "<USER> (<SCORE>)"
+				.replace("<USER>", posts[i].poster)
+				.replace("<SCORE>", get_bot_votes());
+			attribution.textContent = attribution_text;
 
 			// Add random CSS filter to bot images...
 			image_field.style = posts[i].filter;
